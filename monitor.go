@@ -64,7 +64,7 @@ func initAmqp() {
 	ch, err = conn.Channel()
 	failOnError(err, "Failed to open a channel")
 
-	log.Printf("got Channel, declaring Exchange (%s)", "legendanalytics")
+	log.Printf("got Channel, declaring Exchange (%s)", "ourqueue")
 
 	err = ch.ExchangeDeclare(
 		"ourqueue", // name of the exchange

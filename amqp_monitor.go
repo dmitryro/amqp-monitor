@@ -1,22 +1,6 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
-)
-
-func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hi there!")
-}
-
-func main() {
-    http.HandleFunc("/", handler)
-    http.ListenAndServe(":8181", nil)
-}
-➜  celery_monitor cat daemon.go 
-package main
-
-import (
 	"encoding/json"
 	"flag"
 	"fmt"

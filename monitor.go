@@ -90,7 +90,7 @@ func initAmqp() {
 	failOnError(err, "Error declaring the Queue")
 
 	log.Printf("declared Queue (%q %d messages, %d consumers), binding to Exchange (key %q)",
-		q.Name, q.Messages, q.Consumers, "legendanalytics")
+		q.Name, q.Messages, q.Consumers, "ourqueue")
 
 	err = ch.QueueBind(
 		q.Name,             // name of the queue

@@ -20,8 +20,8 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-    "strings"
-    "time"
+        "strings"
+        "time"
 	"github.com/streadway/amqp"
 	"log"
 )
@@ -67,7 +67,7 @@ func initAmqp() {
 	log.Printf("got Channel, declaring Exchange (%s)", "legendanalytics")
 
 	err = ch.ExchangeDeclare(
-		"legendanalytics", // name of the exchange
+		"ourqueue", // name of the exchange
 		"fanout",           // type
 		false,               // durable
 		false,              // delete when complete
@@ -77,10 +77,10 @@ func initAmqp() {
 	)
 	failOnError(err, "Failed to declare the Exchange")
 
-	log.Printf("declared Exchange, declaring Queue (%s)", "legendanalytics")
+	log.Printf("declared Exchange, declaring Queue (%s)", "ourqueue")
 
 	q, err = ch.QueueDeclare(
-		"\"legendanalytics\"", // name, leave empty to generate a unique name
+		"\"ourqueue\"", // name, leave empty to generate a unique name
 	    true,            // durable
 		false,           // delete when usused
 		false,           // exclusive
@@ -94,21 +94,21 @@ func initAmqp() {
 
 	err = ch.QueueBind(
 		q.Name,             // name of the queue
-		"\"legendanalytics\"",      // bindingKey
-		"\"legendanalytics\"", // sourceExchange
+		"\"ourqueue\"",      // bindingKey
+		"\"ourqueue\"", // sourceExchange
 		false,              // noWait
 		nil,                // arguments
 	)
 	failOnError(err, "Error binding to the Queue")
 
-	log.Printf("Queue bound to Exchange, starting Consume (consumer tag %q)", "legendanalytics")
+	log.Printf("Queue bound to Exchange, starting Consume (consumer tag %q)", "ourqueue")
 
 	replies, err = ch.Consume(
 		q.Name,            // queue
-		"legendanalytics", // consumer
+		"ourqueue",        // consumer
 		true,              // auto-ack
 		false,             // exclusive
-	    false,             // no-local
+	        false,             // no-local
 		false,             // no-wait
 		nil,               // args
 	)
